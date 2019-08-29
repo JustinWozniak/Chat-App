@@ -1,0 +1,14 @@
+{
+  "name": "nodeserver2",
+  "version": "1.0.0",
+  "description": "This will be the backend for our iPhone app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Emmanuel DeVries",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
