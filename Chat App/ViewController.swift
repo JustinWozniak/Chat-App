@@ -11,15 +11,14 @@ import UIKit
 
 class ViewController: UIViewController {
     
-
-
     @IBOutlet weak var sendMessage: UITextField!
     @IBOutlet weak var messageText: UITextView!
     
-  
     let MYIPADDRESSNUMBERS = "10.3.109.14:8080"
     
     @IBOutlet weak var userNameField: UITextField!
+    
+
     
     var historyArray: [String] = []
     
@@ -66,7 +65,6 @@ class ViewController: UIViewController {
                                 self.messageText.text = joined
                             }
                         }
-                    
                     }
                 }
                 if let error = error {
@@ -75,12 +73,14 @@ class ViewController: UIViewController {
             })
 
             task.resume()
-            
        }
 )}
     
     @IBAction func submitMessage(_ sender: Any) -> Void {
-        let messageString = userNameField.text! + ": " + sendMessage.text!
+        let messageString = userNameField.text! + ": " + sendMessage.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        let range = NSMakeRange(messageText.text.count - 1, 0)
+        messageText.scrollRangeToVisible(range)
         
         let encodedMessageSTring = messageString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
@@ -90,20 +90,9 @@ class ViewController: UIViewController {
 
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
             guard data != nil else { return }
-
+            
         }
-
         task.resume()
-        
     }
-   
 }
-    
-    
-    
-    
-
-    
-    
-
 
