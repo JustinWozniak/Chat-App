@@ -12,12 +12,12 @@ import UIKit
 class ViewController: UIViewController {
     
 
-    @IBOutlet weak var getLabel: UILabel!
+
     @IBOutlet weak var sendMessage: UITextField!
     @IBOutlet weak var messageText: UITextView!
     
-    @IBOutlet weak var historyText: UITextField!
-    
+  
+    let MYIPADDRESSNUMBERS = "10.3.109.14:8080"
     
     @IBOutlet weak var userNameField: UITextField!
     
@@ -31,8 +31,7 @@ class ViewController: UIViewController {
         
         _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { timer in
             
-            //        let emmansUrl = "http://10.3.109.10:8080/read_message"
-            let justinsUrl = "http://10.3.109.14:8080/read_message"
+            let justinsUrl = "http://" +  self.MYIPADDRESSNUMBERS + "/read_message"
             
             let url = URL(string:justinsUrl )!
             var dataString:String = "StartingString"
@@ -48,9 +47,7 @@ class ViewController: UIViewController {
                     DispatchQueue.main.async {
                         if decodedString == self.sendMessage.text    {
                             
-                            decodedString = "You wrote: " + decodedString!
-//                             self.getLabel.text = decodedString
-                            
+                            decodedString = " " + decodedString!.trimmingCharacters(in: .whitespacesAndNewlines)
                             let lastElement = self.historyArray.last
                             
                             if lastElement != decodedString {
@@ -62,11 +59,9 @@ class ViewController: UIViewController {
                         }
                         else {
                             decodedString = " " + decodedString!
-//                            self.getLabel.text = decodedString
                             let lastElement2 = self.historyArray.last
                             if lastElement2 != decodedString {
                                 self.historyArray.append(decodedString!)
-//                                print(self.historyArray)
                                 let joined = self.historyArray.joined(separator: "\n ")
                                 self.messageText.text = joined
                             }
@@ -85,16 +80,11 @@ class ViewController: UIViewController {
 )}
     
     @IBAction func submitMessage(_ sender: Any) -> Void {
-        
-
-//        let messageString = "\(userNameField.text! "wrote: ") + \(sendMessage.text ?? "No Name Entered")"
-        
         let messageString = userNameField.text! + ": " + sendMessage.text!
         
         let encodedMessageSTring = messageString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
-//        //        let emmansUrl = "http://10.3.109.10:8080/write_message=justin"
-        let justinsUrl = "http://10.3.109.14:8080/write_message?message=" + encodedMessageSTring!
+        let justinsUrl = "http://" + MYIPADDRESSNUMBERS + "/write_message?message=" + encodedMessageSTring!
 
         let url = URL(string:justinsUrl )!
 
